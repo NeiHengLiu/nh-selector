@@ -18,6 +18,7 @@
     this.$body = $('body');    // body 标签
     this.$selector = $('<div class="nh-selector"></div>');   // 初始的元素
     this.locationData = {};    // 保存当前所需的位置数据
+    this.callData = [];     // 回显数据
     this.options = $.extend({}, defaultOption, option);
   };
 
@@ -36,7 +37,9 @@
 
         self.show();
 
+        // 临时用一下
         console.log(self.options.data);
+        self.$body.append(self.dataProcessing(self.options.data))
       })
 
       return self.$element;
@@ -57,19 +60,35 @@
       for(var i = 0; i < dataLength; i++){
         !function(index){
           var $li = $('<li class="nh-selector-menu__item">'+ data[index].label +'</li>');
-          console.log(data[index]);
+          
           self.bind($li, 'click', function(){
-            console.log($(this).index());
-            if(data[index].children !== undefined){
+            
+            var $this = $(this),
+                index = $this.index(),
+                parentIndex = $this.parent().index();
+
+            if(data[index].children !== undefined){ //  还有下一级
+              self.callData[parentIndex] = self.dataScreening(data[index]);
               self.dataProcessing(data[index].children);
-            } else {
-              self.options.callback();
+              self.options.callback(self.callData); // 临时用一下
+            } else {  // 没有下一级
+              
+              self.options.callback(self.callData);
             }
           });
           $selectorMenu.append($li);
         }(i);
       }
       return $selectorMenu;
+    },
+    dataScreening: function(data){
+      var dataObject = {};
+      for(var k in data){
+        if(k !== 'children'){
+          dataObject[k] = data[k]
+        }
+      }
+      return dataObject;
     },
     setDomPosition: function(){
       this.$selector.css({

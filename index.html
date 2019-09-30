@@ -21,14 +21,14 @@
     <br /><br /><br /><br /><br /><br />
     <div class="test test-selector2">点击我试试 2</div>
 
-  <!-- <div class="nh-selector">
+  <div class="nh-selector">
     <ul class="nh-selector-menu">
       <li class="nh-selector-menu__item nh-selector-menu__item--extensible">11111111</li>
-      <li class="nh-selector-menu__item">11111111</li>
+      <li class="nh-selector-menu__item nh-selector-menu__item--active">11111111</li>
       <li class="nh-selector-menu__item">11111111</li>
     </ul>
     <ul class="nh-selector-menu">
-      <li class="nh-selector-menu__item">2222222222222</li>
+      <li class="nh-selector-menu__item nh-selector-menu__item--active">2222222222222</li>
       <li class="nh-selector-menu__item">222222222222</li>
       <li class="nh-selector-menu__item">222222222222</li>
       <li class="nh-selector-menu__item">222222222222</li>
@@ -43,10 +43,10 @@
       <li class="nh-selector-menu__item">33333333333</li>
       <li class="nh-selector-menu__item">33333333333333333</li>
     </ul>
-  </div> -->
+  </div>
 
   <script src="js/jquery-1.12.4.min.js"></script>
-  <script src="js/nh-selector.min.js"></script>
+  <script src="js/nh-selector.js"></script>
   <script>
     $(function(){
       var data = [{
@@ -89,13 +89,14 @@
           }]
         }]
       },{
-        label: '广东省',
+        label: '汉东省',
         value: '00300'
       }];
 
       $('.test-selector').nhSelector({
         data: data,
-        callback: function(){
+        callback: function(data){
+          console.log('回调返回的数据：', data);
           console.log('这里已经是最后一级了...');
         }
       });

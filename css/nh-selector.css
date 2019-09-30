@@ -48,6 +48,10 @@
   background-color: #f5f7fa;
 }
 
+.nh-selector .nh-selector-menu__item--active{
+  color: #409eff;
+}
+
 .nh-selector .nh-selector-menu__item--extensible:after{
 
 }
